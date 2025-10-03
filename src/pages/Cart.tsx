@@ -78,8 +78,9 @@ const Cart: React.FC = () => {
                           Number(e.target.value)
                         )
                   }
-                  className="border button hover:border-teal-700 text-lg font-bold max-w-10
-                   sm:max-w-20 px-1 sm:px-2 py-1"
+                  className="border button hover:border-teal-700 text-lg 
+                  font-bold max-w-16
+                   sm:max-w-28 px-1 sm:px-2"
                   type="number"
                   min={1}
                   defaultValue={item.quantity}

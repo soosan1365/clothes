@@ -6,7 +6,7 @@ import {  NavLink } from "react-router-dom";
 
 const MobileNav = () => {
   return (
-    <div className=" md:hidden  ">
+    <div className=" md:hidden   ">
       <Sheet>
         <SheetTrigger>
           <MenuIcon />

@@ -1,8 +1,8 @@
 import React from "react";
 
-const NewsletterBox = () => {
+const NewsletterBox: React.FC = () => {
   //we submit this form it will not reload the page
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
   return (

@@ -2,7 +2,7 @@ import React from "react";
 import { assets } from "../assets";
 import { Title } from "../components";
 
-const Contact = () => {
+const Contact: React.FC = () => {
   return (
     <div className="  flex flex-col  justify-center gap-5  mt-5">
       

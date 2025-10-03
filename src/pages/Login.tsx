@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-const Login = () => {
+const Login: React.FC = () => {
   //این استیت برای دوحالا لاگین و سیگن هست
   const [currentState, setCurrentState] = useState("Sign Up");
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
   return (

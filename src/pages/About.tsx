@@ -1,7 +1,7 @@
 import React from "react";
 import NewsletterBox from "../components/NewsletterBox";
 
-const About = () => {
+const About: React.FC = () => {
   return (
     <div>
       <div className="relative About flex text-2xl md:text-4xl font-semibold justify-center

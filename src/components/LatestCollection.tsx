@@ -1,18 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../context/ShopContext";
-import Title from "./Title";
+import { ShopContext } from "../context";
+import { Title, ProductItem } from ".";
+import type { productType, ShopContextType } from "../type";
 
-import ProductItem from "./ProductItem";
+const LatestCollection: React.FC = () => {
+  // catch products from shopcontext
+  const shop = useContext(ShopContext) as ShopContextType | undefined;
 
-const LatestCollection = () => {
-  //catch products from shopcontext
-  const { products } = useContext(ShopContext);
-  //use useState to create a new instance of the current state object and store it
-  const [latestProducts, setLatestProducts] = useState([]);
-  // use useEfect for get just 10 products
+  // guard in case context is undefined
+  const products = shop?.products ?? [];
+
+  // useState with typed product array
+  const [latestProducts, setLatestProducts] = useState<productType[]>([]);
+
+  // update latestProducts whenever products change
   useEffect(() => {
     setLatestProducts(products.slice(0, 10));
-  }, []);
+  }, [products]);
 
   return (
     <div className="">
@@ -24,16 +28,10 @@ const LatestCollection = () => {
       </div>
       {/* Rendering Products */}
       <div className="grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4  gap-y-6">
-        {/*  map into latestProducts for show  latest Products*/}
-        {latestProducts.map((item, index) => (
-          // call the function ProductItem and path props to get latest products
-          <ProductItem
-            key={index}
-            id={item._id}
-            image={item.image}
-            name={item.name}
-            price={item.price}
-          />
+        {/*  map into latestProducts for show latest Products*/}
+        {latestProducts.map((item) => (
+          // use product _id as stable key
+          <ProductItem key={item._id} id={item._id} image={item.image} name={item.name} price={item.price} />
         ))}
       </div>
     </div>

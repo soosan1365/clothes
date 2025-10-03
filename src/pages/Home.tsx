@@ -1,13 +1,13 @@
 import React from "react";
-import Hero from "../components/Hero.js";
-import LatestCollection from "../components/LatestCollection.js";
+import Hero from "../components/Hero";
+import LatestCollection from "../components/LatestCollection";
 
-import BestSeller from "../components/BestSeller.js";
-import OurPolicy from "../components/OurPolicy.js";
+import BestSeller from "../components/BestSeller";
+import OurPolicy from "../components/OurPolicy";
 
-import NewsletterBox from "../components/NewsletterBox.jsx";
+import NewsletterBox from "../components/NewsletterBox";
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
     <div>
       <Hero />

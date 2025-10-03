@@ -90,8 +90,9 @@ const Product: React.FC = () => {
               {productData.sizes?.map((item, index) => (
                 <button
                   onClick={() => setSize(item)}
-                  className={`title  border-2 border-gray-400 rounded-lg py-2 px-4 ${
-                    item === size ? "bg-teal-900   " : ""
+                  className={`title hover:border-red-800 border-2
+                     border-gray-400 rounded-lg py-2 px-4 ${
+                    item === size ? "border-red-700   " : ""
                   }`}
                   key={index}
                 >

@@ -67,30 +67,47 @@ const Cart: React.FC = () => {
                         {item.size}
                       </p>
                     
-                    <div className="flex justify-center items-center gap-5">
-                       <input
-                  onChange={(e) =>
-                    e.target.value === "" || e.target.value === "0"
-                      ? null
-                      : updateQuantity(
-                          item._id,
-                          item.size,
-                          Number(e.target.value)
-                        )
-                  }
-                  className="border button hover:border-teal-700 text-lg 
-                  font-bold max-w-16
-                   sm:max-w-28 px-1 sm:px-2"
-                  type="number"
-                  min={1}
-                  defaultValue={item.quantity}
-                />
-                <img
-                  onClick={() => updateQuantity(item._id, item.size, 0)}
-                  className="w-4 mr-4 sm:w-5 cursor-pointer"
-                  src={assets.bin_icon}
-                  alt=""
-                /></div>
+                    <div className="flex justify-center items-center gap-3">
+                      <button
+                        aria-label={`Decrease quantity of ${productData.name} size ${item.size}`}
+                        onClick={() => updateQuantity(item._id, item.size, Math.max(1, item.quantity - 1))}
+                        className=" button w-10 h-7 px-2 py-1 border rounded hover:bg-gray-100"
+                      >
+                        -
+                      </button>
+
+                      <input
+                        onChange={(e) =>
+                          e.target.value === "" || e.target.value === "0"
+                            ? null
+                            : updateQuantity(
+                                item._id,
+                                item.size,
+                                Number(e.target.value)
+                              )
+                        }
+                        className="border button hover:border-teal-700 text-lg font-bold max-w-16  px-1 sm:px-2 text-center"
+                        type="number"
+                        min={1}
+                        value={item.quantity}
+                        readOnly={false}
+                      />
+
+                      <button
+                        aria-label={`Increase quantity of ${productData.name} size ${item.size}`}
+                        onClick={() => updateQuantity(item._id, item.size, item.quantity + 1)}
+                        className=" button w-10 h-7 px-1.5 py-1 border rounded hover:bg-gray-100"
+                      >
+                        +
+                      </button>
+
+                      <img
+                        onClick={() => updateQuantity(item._id, item.size, 0)}
+                        className=" w-4 mr-4 sm:w-5 cursor-pointer"
+                        src={assets.bin_icon}
+                        alt="remove"
+                      />
+                    </div>
                   </div></div>
                 </div>
              

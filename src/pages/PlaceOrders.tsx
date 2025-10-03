@@ -1,11 +1,14 @@
 import React, { useState, useContext } from "react";
-import CartTotal from "../components/CartTotal";
-import { assets } from "../assets/assets";
-import { ShopContext } from "../context/ShopContext";
+import { CartTotal } from "../components";
+import { assets } from "../assets";
+import { ShopContext } from "../context";
+import type { ShopContextType } from "../type";
 
-const PlaceOrders = () => {
-  const [method, setMethod] = useState("cod");
-  const { navigate } = useContext(ShopContext);
+const PlaceOrders: React.FC = () => {
+  const [method, setMethod] = useState<string>("cod");
+  const shop = useContext(ShopContext) as ShopContextType | undefined;
+  if (!shop) return null;
+  const { navigate } = shop;
   return (
     <div className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t">
       {/* ----------------left side---------- */}

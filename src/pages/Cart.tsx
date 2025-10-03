@@ -1,15 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../context/ShopContext";
-import { assets } from "../assets/assets";
-import CartTotal from "../components/CartTotal";
+import { ShopContext } from "../context";
+import { assets } from "../assets";
+import {CartTotal} from "../components";
+import type { ShopContextType, productType } from "../type";
 
-const Cart = () => {
-  const { products, currency, updateQuantity, cartItems, navigate } =
-    useContext(ShopContext);
-  const [cartData, setCartData] = useState([]);
+type CartItem = { _id: string; size: string; quantity: number };
+
+const Cart: React.FC = () => {
+  const shop = useContext(ShopContext) as ShopContextType | undefined;
+  if (!shop) return null;
+  const { products, currency, updateQuantity, cartItems, navigate } = shop;
+  const [cartData, setCartData] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    const tempData = [];
+    const tempData: CartItem[] = [];
     for (const items in cartItems) {
       for (const item in cartItems[items]) {
         if (cartItems[items][item] > 0) {
@@ -34,19 +38,20 @@ const Cart = () => {
           YOURS<span className="ml-3 ">CART</span>
         </p>
         <div>
-          {cartData.map((item, index) => {
-            const productData = products.find(
+          {cartData.map((item) => {
+            const productData: productType | undefined = products.find(
               (product) => product._id === item._id
             );
+            if (!productData) return null;
             return (
               <div
-                key={index}
+                key={`${item._id}_${item.size}`}
                 className="py-4 border-t border-b  text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4"
               >
                 <div className="flex items-start gap-6">
                   <img
                     className="w-16 image sm:w-20 "
-                    src={productData.image[0]}
+                    src={productData.image?.[0]}
                     alt=""
                   />
                   <div className="flex flex-col gap-5">
@@ -54,7 +59,7 @@ const Cart = () => {
                       {productData.name}
                     </p>
                     <div className="flex   items-center gap-5 mt-2 text-sm font-bold">
-                      <p cl>
+                      <p>
                         {currency}
                         {productData.price}
                       </p>

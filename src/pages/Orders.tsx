@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
-import { ShopContext } from "../context/ShopContext";
+import { ShopContext } from "../context";
+import type { ShopContextType, productType } from "../type";
 
-const Orders = () => {
-  const { products, currency } = useContext(ShopContext);
+const Orders: React.FC = () => {
+  const shop = useContext(ShopContext) as ShopContextType | undefined;
+  if (!shop) return null;
+  const { products, currency } = shop;
 
   return (
     <div className="border-t   pt-12">
@@ -16,13 +19,13 @@ const Orders = () => {
         <p className=" mt-4  ml-2 line w-8 sm:w-14 h-[1px] sm:h-[2px] bg-gray-700 "></p>
       </div>
       <div className="grid lg:grid-cols-3 gap-6">
-        {products.slice(1, 4).map((item, index) => (
+        {products.slice(1, 4).map((item: productType) => (
           <div
-            key={index}
+            key={item._id}
             className="py-4  order text-gray-700   md:items-center md:justify-between gap-12"
           >
-            <div className="flex items-start gap-6 text-sm">
-              <img className="w-16 image sm:w-20" src={item.image[0]} alt="" />
+              <div className="flex items-start gap-6 text-sm">
+              <img className="w-16 image sm:w-20" src={item.image?.[0]} alt="" />
               <div>
                 <p className="sm:text-base collection  font-medium">
                   {item.name}

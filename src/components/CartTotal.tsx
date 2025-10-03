@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
-import { ShopContext } from "../context/ShopContext";
-import Title from "./Title";
+import { ShopContext } from "../context";
 
-const CartTotal = () => {
-  const { currency, delivery_fee, getCartAmount } = useContext(ShopContext);
+import type { ShopContextType } from "../type";
+
+const CartTotal: React.FC = () => {
+  const shop = useContext(ShopContext) as ShopContextType | undefined;
+  if (!shop) return null;
+  const { currency, delivery_fee, getCartAmount } = shop;
   return (
     <div className="w-full gab">
       <div className="text-2xl ">

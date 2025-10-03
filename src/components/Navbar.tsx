@@ -1,12 +1,15 @@
-import React, { useContext, useState } from "react";
-import { assets } from "../assets/assets";
+import React, { useContext } from "react";
+import { assets } from "../assets";
 import { Link, NavLink } from "react-router-dom";
-import { ShopContext } from "../context/ShopContext";
+import { ShopContext } from "../context";
+import type { ShopContextType } from "../type";
 import MobileNav from "./MobileNav";
 
-const Navbar = () => {
-  const [visible, setVisible] = useState(false);
-  const {  getCartCount } = useContext(ShopContext);
+const Navbar: React.FC = () => {
+  // const [visible, setVisible] = useState<boolean>(false);
+  const shop = useContext(ShopContext) as ShopContextType | undefined;
+  if (!shop) return null;
+  const { getCartCount } = shop;
 
   return (
     <div className="flex  items-center justify-between py-5  font-medium text-gray-700 ">

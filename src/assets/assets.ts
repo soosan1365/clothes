@@ -101,7 +101,9 @@ export const assets = {
    
 }
 
-export const products = [
+import type { productType } from "../type";
+
+export const products: productType[] = [
     {
         _id: "aaaaa",
         name: "Women Round Neck Cotton Top",

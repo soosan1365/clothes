@@ -1,37 +1,41 @@
 import React, { useContext, useState, useEffect } from "react";
-import { ShopContext } from "../context/ShopContext";
-import ProductItem from "../components/ProductItem";
-import Title from "../components/Title"
+import { ShopContext } from "../context";
+import { Title, ProductItem } from "../components";
+import type { productType } from "../type";
 
-function Collection() {
-  const { products, search, showSearch } = useContext(ShopContext);
+function Collection(): React.ReactElement | null {
+  const shop = useContext(ShopContext) as any;
+  if (!shop) return null;
+  const { products, search, showSearch } = shop;
   // این استیت برای  محصولات فیلتر شده و تغییر ان هاست
-  const [filterProducts, setFilterProducts] = useState([]);
+  const [filterProducts, setFilterProducts] = useState<productType[]>([]);
   //    و این استیت برای  کتگوری  و ست ان وقتی تاگل وارد عمل میشه
-  const [category, setCategory] = useState([]);
-  const [subCategory, setSubCategory] = useState([]);
-  const [sortType, setSortType] = useState("relavent");
+  const [category, setCategory] = useState<string[]>([]);
+  const [subCategory, setSubCategory] = useState<string[]>([]);
+  const [sortType, setSortType] = useState<string>("relavent");
 
   // handle category change
   // اگر مقدار تگی که تاگل میشه توی این متغیر کتگوری موجود  بود یعنی انتخاب شده بود
   //بیا ست کتگوری را اجرا کن ومقدار های قبلی رابگیر و فیلتر کن
   // محصولاتی که با مقدار تگ تاگل شده یکسان  نیست را نشون بده
   //این یعنی اگر دوباره تاگل شده بیاد غیر فعال بشه
-  const toggleCategory = (e) => {
-    if (category.includes(e.target.value)) {
-      setCategory((prev) => prev.filter((item) => item !== e.target.value));
+  const toggleCategory = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    if (category.includes(val)) {
+      setCategory((prev) => prev.filter((item) => item !== val));
       //در غیر این صورت بیا قبلی ها را  بگیر ونشون بده
       //  و مقدار کتگوری که تاگل شده را هم  تو ارایه نشون بده
     } else {
-      setCategory((prev) => [...prev, e.target.value]);
+      setCategory((prev) => [...prev, val]);
     }
   };
   //handle subcategory change
-  const toggleSubCategory = (e) => {
-    if (subCategory.includes(e.target.value)) {
-      setSubCategory((prev) => prev.filter((item) => item !== e.target.value));
+  const toggleSubCategory = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    if (subCategory.includes(val)) {
+      setSubCategory((prev) => prev.filter((item) => item !== val));
     } else {
-      setSubCategory((prev) => [...prev, e.target.value]);
+      setSubCategory((prev) => [...prev, val]);
     }
   };
   //filter products by category property
@@ -41,19 +45,19 @@ function Collection() {
     // و انهایی را نشون بده که اسم محصول انها شامل کلمات این سرچ باشد
     if (showSearch && search) {
       //filter products when showSearch and search  are true
-      productsCopy = productsCopy.filter((item) =>
+      productsCopy = productsCopy.filter((item: productType) =>
         item.name.toLowerCase().includes(search.toLowerCase())
       );
     }
     //اگر متغییر کتگوری  طولش بیش از صفر بود یعنی تغییراتی توی تگ  کتگوری رخ داده بود
     // و کتگوری هایی را نمایش بده که شامل کتگوری این محصولات باشند
     if (category.length > 0) {
-      productsCopy = productsCopy.filter((item) =>
+      productsCopy = productsCopy.filter((item: productType) =>
         category.includes(item.category)
       );
     }
     if (subCategory.length > 0) {
-      productsCopy = productsCopy.filter((item) =>
+      productsCopy = productsCopy.filter((item: productType) =>
         subCategory.includes(item.subCategory)
       );
     }
@@ -189,9 +193,9 @@ function Collection() {
         </div>
         {/* map Product */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-5">
-          {filterProducts.map((item, index) => (
+          {filterProducts.map((item) => (
             <ProductItem
-              key={index}
+              key={item._id}
               name={item.name}
               id={item._id}
               price={item.price}

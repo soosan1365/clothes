@@ -1,21 +1,22 @@
-import { createContext,  useState } from "react";
-import { products } from "../assets/assets";
+import { createContext, useState } from "react";
+import { products } from "../assets";
+import type { ShopContextType, productType, CartItemsType } from "../type";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 //createContext
-export const ShopContext = createContext();
+export const ShopContext = createContext<ShopContextType | undefined>(undefined);
 
- const ShopContextProvider = (props) => {
+const ShopContextProvider: React.FC<{ children?: React.ReactNode }> = (props) => {
   const currency = "$";
   const delivery_fee = 10;
   //define useState for searching
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
   //define useState for show tag search
-  const [showSearch, setShowSearch] = useState(true);
-  const [cartItems, setCartItems] = useState({});
+  const [showSearch, setShowSearch] = useState<boolean>(true);
+  const [cartItems, setCartItems] = useState<CartItemsType>({});
   const navigate = useNavigate();
   // create function for event handlers addtocart
-  const addToCart = async (itemId, size) => {
+  const addToCart = async (itemId: string, size: string) => {
     if (!size) {
       toast.error("Select Product Size");
       return;
@@ -53,9 +54,10 @@ export const ShopContext = createContext();
     return totalCount;
   };
 
-  const updateQuantity = async (itemId, size, quantity) => {
+  const updateQuantity = async (itemId: string, size: string, quantity: number) => {
     let cartData = structuredClone(cartItems);
 
+    if (!cartData[itemId]) cartData[itemId] = {};
     cartData[itemId][size] = quantity;
 
     setCartItems(cartData);
@@ -64,11 +66,11 @@ export const ShopContext = createContext();
   const getCartAmount = () => {
     let totalAmount = 0;
     for (const items in cartItems) {
-      let itemInfo = products.find((product) => product._id === items);
+      const itemInfo = products.find((product: productType) => product._id === items);
 
       for (const item in cartItems[items]) {
         try {
-          if (cartItems[items][item] > 0) {
+          if (cartItems[items][item] > 0 && itemInfo) {
             totalAmount += itemInfo.price * cartItems[items][item];
           }
         } catch (error) {}

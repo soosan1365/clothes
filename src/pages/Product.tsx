@@ -1,35 +1,36 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ShopContext } from "../context/ShopContext";
-import { assets } from "../assets/assets";
-import RelatedProducts from "../components/RelatedProducts";
+import { ShopContext } from "../context";
+import { assets } from "../assets";
+import {RelatedProducts} from "../components";
+import type { ShopContextType, productType } from "../type";
 
-const Product = () => {
-  const { productId } = useParams();
-  const { products, currency, addToCart } = useContext(ShopContext);
-  //useState for geting the data of the product
-  const [productData, setProductData] = useState(false);
+const Product: React.FC = () => {
+  const { productId } = useParams<{ productId?: string }>();
+  const shop = useContext(ShopContext) as ShopContextType | undefined;
+  if (!shop) return null;
+  const { products, currency, addToCart } = shop;
+
+  //useState for getting the data of the product
+  const [productData, setProductData] = useState<productType | null>(null);
   // useState for getting the image of the product
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<string>("");
   //useState for getting the size of the product
-  const [size, setSize] = useState("");
-  //maping through the products to find the product by id
-  // and then calling setPoroductData for get the data of the product
-  // and setImage for get the image of the product
+  const [size, setSize] = useState<string>("");
 
   const fetchProductData = async () => {
-    products.map((item) => {
-      if (item._id === productId) {
-        setProductData(item);
-        setImage(item.image[0]);
-        return null;
-      }
-    });
+    if (!productId) {
+      setProductData(null);
+      return;
+    }
+    const found = products.find((item) => item._id === productId) || null;
+    setProductData(found as productType | null);
+    if (found && found.image && found.image.length > 0) setImage(found.image[0]);
   };
-  //this function is called when the productId is changed
+
   useEffect(() => {
     fetchProductData();
-  }, [productId]);
+  }, [productId, products]);
 
   return productData ? (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
@@ -38,11 +39,9 @@ const Product = () => {
         {/* ..............product images............. */}
         <div className="flex-1 flex flex-col-reverse gap-3  sm:flex-row">
           <div className=" flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full ">
-            {
-              // mapping  through image property in productData variable
-              productData.image.map((item, index) => (
-                // and get the images and show them by src attribute in img tag
-                // then when clicked on the image then set the image property to that
+            { 
+              // mapping through image property in productData variable
+              productData.image?.map((item, index) => (
                 <img
                   onClick={() => setImage(item)}
                   src={item}
@@ -88,7 +87,7 @@ const Product = () => {
           <div>
             <p className="text-xl mb-2">Select Size</p>
             <div className="flex gap-2">
-              {productData.sizes.map((item, index) => (
+              {productData.sizes?.map((item, index) => (
                 <button
                   onClick={() => setSize(item)}
                   className={`title  border-2 border-gray-400 rounded-lg py-2 px-4 ${

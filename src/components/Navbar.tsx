@@ -6,9 +6,10 @@ import type { ShopContextType } from "../type";
 import MobileNav from "./MobileNav";
 
 const Navbar: React.FC = () => {
+
   const [navblur, setNavblur] = useState<boolean>(false);
   const startScroll = () => {
-    if (window.scrollY >30) {
+    if (window.scrollY >50) {
       setNavblur(true);
     } else {
       setNavblur(false);
@@ -23,6 +24,8 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
+
+
   const shop = useContext(ShopContext) as ShopContextType | undefined;
   if (!shop) return null;
   const { getCartCount } = shop;
@@ -31,8 +34,8 @@ const Navbar: React.FC = () => {
     <div
       className={` ${
         !navblur
-          ? "absolute top-0 left-0 right-0 opacity-100 z-50 px-10 py-2 "
-          : "fixed top-0 left-0 right-0 flex items-center text-white justify-center opacity-100 z-50 blur-3xl"
+          ? "absolute top-0 left-0 right-0 opacity-100 z-50 px-10 py-2 bg-white"
+          : "fixed top-0 left-0 right-0 px-10 opacity-100 z-50 bg-white/90 "
       }`}
     >
       <div
@@ -40,7 +43,7 @@ const Navbar: React.FC = () => {
       font-medium text-gray-700  "
       >
         <Link to="/">
-          <img src={assets.logo} className="logo w-28  md:w-40" alt="" />
+          <img src={assets.logo} className="logo w-20  md:w-35" alt="" />
         </Link>
         <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
           <NavLink to="/" className="flex flex-col  item-center gap-1 ">

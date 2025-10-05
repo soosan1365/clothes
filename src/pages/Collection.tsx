@@ -96,7 +96,7 @@ function Collection(): React.ReactElement | null {
   }, [sortType]);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-1 sm:gap-5 pt-10  mt-20">
+    <div className="flex flex-col sm:flex-row gap-1 sm:gap-5 pt-10  mt-10 md:mt-20">
       {/* Filter Options */}
       <div className=" min-w-60  ">
         {/*wrote onClick for open and close filter  */}

@@ -1,8 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { products } from "../assets";
 import type { ShopContextType, productType, CartItemsType } from "../type";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+
 //createContext
 export const ShopContext = createContext<ShopContextType | undefined>(undefined);
 
@@ -13,7 +14,15 @@ const ShopContextProvider: React.FC<{ children?: React.ReactNode }> = (props) =>
   const [search, setSearch] = useState<string>("");
   //define useState for show tag search
   const [showSearch, setShowSearch] = useState<boolean>(true);
-  const [cartItems, setCartItems] = useState<CartItemsType>({});
+  const [cartItems, setCartItems] = useState<CartItemsType>(() => {
+    try {
+      const stored = localStorage.getItem("cartItems");
+      return stored ? JSON.parse(stored) : {};
+    } catch (err) {
+      return {};
+    }
+    
+  });
   const navigate = useNavigate();
   // create function for event handlers addtocart
   const addToCart = async (itemId: string, size: string) => {
@@ -36,6 +45,7 @@ const ShopContextProvider: React.FC<{ children?: React.ReactNode }> = (props) =>
     }
 
     setCartItems(cartData);
+    toast.success("success:product add to the cart");
   };
 
   const getCartCount = () => {
@@ -94,7 +104,13 @@ const ShopContextProvider: React.FC<{ children?: React.ReactNode }> = (props) =>
     getCartAmount,
     navigate,
   };
-
+useEffect(() => {
+  try {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  } catch (err) {
+    // ignore localStorage write errors (e.g., quota)
+  }
+}, [cartItems]);
   return (
     <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>
   );

@@ -4,7 +4,7 @@ import { Title } from "../components";
 
 const Contact: React.FC = () => {
   return (
-    <div className="  flex flex-col  justify-center gap-5  mt-5">
+    <div className="  flex flex-col  justify-center gap-3  mt-30">
       
        <Title text1="CONTACT US"/>
   

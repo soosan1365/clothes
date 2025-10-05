@@ -1,3 +1,4 @@
+export { default as CartEmpty } from './cartEmpty';
 export { default as Title } from './Title';
 export { default as ProductItem } from './ProductItem';
 export { default as Navbar } from './Navbar';

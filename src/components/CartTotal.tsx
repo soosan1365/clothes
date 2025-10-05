@@ -12,12 +12,13 @@ const CartTotal: React.FC = () => {
       <div className="text-2xl ">
         <p
           className="  
-       text-[1rem] font-semibold pl-2 carttotal border "
+       text-[1rem] font-semibold pl-2 carttotal border text-gray-800"
         >
           CART<span className="ml-3 ">TOTAL</span>
         </p>
       </div>
-      <div className="flex Subtotal flex-col gap-2 mt-2 px-7 border-2 rounded-md text-[18px]">
+      <div className="flex Subtotal flex-col gap-2 mt-2 px-7 border-2
+      text-gray-800 rounded-md text-[18px]">
         <div className="flex justify-between">
           <p> Subtotal</p>
           <p>

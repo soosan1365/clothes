@@ -4,6 +4,7 @@ import { ShopContext } from "../context";
 import { assets } from "../assets";
 import {RelatedProducts} from "../components";
 import type { ShopContextType, productType } from "../type";
+import { toast } from "react-toastify";
 
 const Product: React.FC = () => {
   const { productId } = useParams<{ productId?: string }>();
@@ -33,7 +34,7 @@ const Product: React.FC = () => {
   }, [productId, products]);
 
   return productData ? (
-    <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
+    <div className="mt-20 pt-10 transition-opacity ease-in duration-500 opacity-100">
       {/*............. Product data................ */}
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
         {/* ..............product images............. */}
@@ -102,9 +103,20 @@ const Product: React.FC = () => {
             </div>
           </div>
           <button
-            onClick={() => addToCart(productData._id, size)}
-            className=" bg-teal-950  shadow-gray-900  shadow-md rounded-md
-           text-white mt-6 px-8 py-3 text-md active:bg-gray-400 "
+            onClick={() => {
+              if (size) {
+                addToCart(productData._id, size);
+              } else {
+                toast.error("Select Product Size");
+              }
+            }}
+            aria-disabled={!size}
+            className={
+              (size
+                ? "bg-teal-950 shadow-gray-900 shadow-md rounded-md text-white"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed") +
+              " mt-6 px-8 py-3 text-md"
+            }
           >
             ADD TO CART
           </button>

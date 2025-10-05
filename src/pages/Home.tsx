@@ -9,7 +9,7 @@ import NewsletterBox from "../components/NewsletterBox";
 
 const Home: React.FC = () => {
   return (
-    <div>
+    <div className="mt-30">
       <Hero />
       <LatestCollection />
       <BestSeller />

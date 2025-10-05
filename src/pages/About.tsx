@@ -4,7 +4,7 @@ import NewsletterBox from "../components/NewsletterBox";
 const About: React.FC = () => {
   return (
     <div>
-      <div className="relative About flex text-2xl md:text-4xl font-semibold justify-center
+      <div className="relative About flex text-2xl mt-20 md:text-4xl font-semibold justify-center
          border-t">
         <p
           className="absolute top-2 collection   

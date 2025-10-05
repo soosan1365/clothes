@@ -74,10 +74,12 @@ import razorpay_logo from './razorpay_logo.png'
 import stripe_logo from './stripe_logo.png'
 import cross_icon from './cross_icon.png'
 import hr from './hr.png'
+import empty from './empty.png'
 
 
 
 export const assets = {
+    empty,
     logo,
     hero_img,
     cart_icon,
